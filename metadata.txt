@@ -1,0 +1,17 @@
+# This file contains metadata for your plugin.
+
+# This file should be included when you package your plugin.# Mandatory items:
+
+[general]
+name=RectangleDrawingTool
+qgisMinimumVersion=3.0
+description=A tool to draw a rectangle. Just set the first two points and the rectangle will be extruded along the side's normal by moving the mouse
+version=0.0.1
+author=Jannik Günther
+email=jannik.guenther@hotmail.de
+
+about=A tool to draw a rectangle. Just set the first two points and the rectangle will be extruded along the side's normal by moving the mouse.
+
+repository=https://github.com/J-Guenther/QgisRectangleDrawingTool
+
+tags=python,vector,rectangle,draw
