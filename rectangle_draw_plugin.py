@@ -14,30 +14,30 @@ class RectangleDrawingTool(QgsMapTool):
         super(RectangleDrawingTool, self).__init__(canvas)
         self.canvas = canvas
         self.rb = None
-        self.points = []
+        self.points_set_by_user = []
         self.isRectangle = False
         self.capturing = False
 
     def canvasPressEvent(self, e):
-        if len(self.points) < 2:
-            self.points.append(self.toMapCoordinates(e.pos()))
+        if len(self.points_set_by_user) < 2:
+            self.points_set_by_user.append(self.toMapCoordinates(e.pos()))
             
-        if len(self.points) == 1:
+        if len(self.points_set_by_user) == 1:
             self.rb = QgsRubberBand(self.canvas, QgsWkbTypes.PolygonGeometry)
             self.rb.setColor(Qt.red)
             self.rb.setWidth(1)
             self.rb.setToGeometry(QgsGeometry.fromPolygonXY([]))
-            self.rb.addPoint(self.points[0], True)  # Add the first point
+            self.rb.addPoint(self.points_set_by_user[0], True)  # Add the first point
             self.capturing = True
 
     def canvasMoveEvent(self, e):
-        if 1 <= len(self.points) < 2:
+        if 1 <= len(self.points_set_by_user) < 2:
             mouse_position = self.toMapCoordinates(e.pos())
-            self.rb.setToGeometry(QgsGeometry.fromPolygonXY([self.points + [mouse_position]] ))
+            self.rb.setToGeometry(QgsGeometry.fromPolygonXY([self.points_set_by_user + [mouse_position]]))
             self.rb.show()
-        elif len(self.points) == 2 and self.capturing:
-            point1 = QgsPoint(self.points[0])
-            point2 = QgsPoint(self.points[1])
+        elif len(self.points_set_by_user) == 2 and self.capturing:
+            point1 = QgsPoint(self.points_set_by_user[0])
+            point2 = QgsPoint(self.points_set_by_user[1])
 
             # Calculate the vector representing the line
             line_vector = point2 - point1
@@ -68,9 +68,9 @@ class RectangleDrawingTool(QgsMapTool):
             self.isRectangle = True
 
     def canvasReleaseEvent(self, e):
-        if len(self.points) < 2:
-            self.points[-1] = self.toMapCoordinates(e.pos())
-            self.rb.setToGeometry(QgsGeometry.fromPolygonXY([self.points]))
+        if len(self.points_set_by_user) < 2:
+            self.points_set_by_user[-1] = self.toMapCoordinates(e.pos())
+            self.rb.setToGeometry(QgsGeometry.fromPolygonXY([self.points_set_by_user]))
             self.rb.show()
         elif self.isRectangle:
         
@@ -156,7 +156,7 @@ class RectangleDrawingTool(QgsMapTool):
         if self.rb:
             self.rb.reset(QgsWkbTypes.PolygonGeometry)
             self.rb = None
-        self.points = []
+        self.points_set_by_user = []
         self.isRectangle = False
         self.canvas.refresh()
 
