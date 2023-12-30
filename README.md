@@ -1,0 +1,3 @@
+# QgisRectangleDrawingTool
+
+![](demo.gif)
