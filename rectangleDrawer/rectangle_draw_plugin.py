@@ -57,8 +57,7 @@ class RectangleDrawingTool(QgsMapTool):
                 QgsPointXY(point1),
                 QgsPointXY(point2),
                 QgsPointXY(point2.x() + width * perpendicular_vector.x(), point2.y() + width * perpendicular_vector.y()),
-                QgsPointXY(point1.x() + width * perpendicular_vector.x(), point1.y() + width * perpendicular_vector.y()),
-                QgsPointXY(point1),
+                QgsPointXY(point1.x() + width * perpendicular_vector.x(), point1.y() + width * perpendicular_vector.y())
             ]
             
             # Create a QgsGeometry object for the extruded line (a closed polygon)
